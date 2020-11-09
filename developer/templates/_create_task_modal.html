@@ -1,0 +1,29 @@
+{% load crispy_forms_tags %}
+{% if perms.task.task_management %}
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-task-modal">Add task</button>
+<div class="modal fade" id="add-task-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">New Task</h4>
+                <button type="button" class="close" data-dismiss="modal"><i class="fa fa-close"></i></button>
+            </div>
+            <div class="modal-body">
+                {% if developer %}
+                <form action="{% url 'task:create' developer.id %}" method="post">
+                {% else %}
+                <form action="{% url 'task:create' %}" method="post">
+                {% endif %}
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div>
+                        <button class="btn btn-primary" type="submit">Créer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}

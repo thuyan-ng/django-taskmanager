@@ -1,0 +1,33 @@
+{% extends "developer/_base.html"%}
+
+{% block title %}Liste des dévelopeurs{% endblock title %}
+
+{% block content %}
+
+{% if developers %}
+<div class="container-sm 1-3 d-flex flex-wrap border">
+    {% for dev in developers %}
+    <div class="card bg-primary m-2 p-1 rounded-lg" syle="width:300px">
+        <div class="card-title">
+            <p><strong>{{dev.first_name}} {{dev.last_name}}</strong></p>
+        </div>
+        <div class="card-body">
+            {{dev.tasks.all|length}} 
+            tâche{{developer.tasks.all|length|pluralize}}
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'developer:detail' dev.id %}" class="btn btn-outline-light">Détails</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div class="container m-4">
+    <alert class="alert alert-warning">Il n'y a aucun dévelopeur enregistré!</alert>
+</div>
+{% endif %}
+
+{% include '_create_dev_modal.html' %}
+
+{% endblock content %}
